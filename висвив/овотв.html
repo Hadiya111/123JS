@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мир пуговиц!</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bad+Script&family=Montserrat:wght@300&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #000; /* Черный фон вокруг визитки */
+        }
+
+        .card {
+            width: 650px;
+            height: 370px;
+            background: #000; /* Черный фон самой визитки */
+            border-radius: 15px;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            /* Легкое бирюзовое свечение по контуру, как на скриншоте */
+            box-shadow: 0 0 50px rgba(0, 206, 209, 0.15);
+        }
+
+        /* Картинка с пуговицами на льняной ткани */
+        .image-bg {
+            position: absolute;
+            width: 320px;
+            height: 240px;
+            z-index: 1;
+            /* Ссылка на качественное изображение пуговиц */
+            background-image: url('https://img.freepik.com/free-photo/top-view-buttons-frame-arrangement_23-2148643743.jpg?semt=ais_hybrid&w=740&q=80'); 
+            background-size: cover;
+            background-position: center;
+        }
+
+        /* БЛОК С ТЕКСТОМ ПО ЦЕНТРУ */
+        .monogram {
+            position: relative;
+            z-index: 10;
+            font-family: 'Bad Script', cursive; /* Прописной шрифт */
+            text-align: center;
+        }
+
+        /* СТИЛЬ ДЛЯ "МИР ПУГОВИЦ!" */
+        .letter-z {
+            font-size: 35px;
+            
+            /* --- ИЗМЕНЕНО: БОРДОВЫЙ ЦВЕТ --- */
+            color: #800000; /* Насыщенный бордовый (Maroon) */
+            
+            /* Мягкое белое свечение/обводка, чтобы бордовый не сливался с темным фоном */
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.4), 
+                         1px 1px 1px rgba(255, 255, 255, 0.5),
+                         -1px -1px 1px rgba(255, 255, 255, 0.5);
+            
+            line-height: 1;
+        }
+
+        /* Текст в самом низу: Professional Design */
+        .footer-text {
+            position: absolute;
+            bottom: 30px;
+            font-family: 'Montserrat', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            font-size: 10px;
+            color: #008b8b; /* Бирюзовый цвет для нижней надписи */
+            z-index: 11;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <div class="image-bg"></div>
+
+        <div class="monogram">
+            <div class="letter letter-z">Мир пуговиц!</div>
+        </div>
+
+        <div class="footer-text">Professional Design</div>
+    </div>
+
+</body>
+</html>

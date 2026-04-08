@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Крылья в опасности | Фонд спасения птиц</title>
+    <!-- Google Fonts & Font Awesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800;14..32,900&family=Playfair+Display:ital,wght@0,500;0,700;1,500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- AOS анимация -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0c0f0e;
+            color: #e9e2d4;
+            line-height: 1.5;
+            scroll-behavior: smooth;
+        }
+
+        /* кроваво-драматичные акценты */
+        :root {
+            --blood: #9e2a2b;
+            --blood-light: #c73d3f;
+            --dark-bg: #0a0c0b;
+            --gold-rust: #d9a13b;
+            --glass-edge: rgba(158, 42, 43, 0.4);
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Header с кровяным акцентом */
+        header {
+            background: rgba(10, 12, 11, 0.96);
+            backdrop-filter: blur(12px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(158, 42, 43, 0.5);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 0;
+            flex-wrap: wrap;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.7rem;
+            font-weight: 800;
+            color: #c73d3f;
+            letter-spacing: -0.5px;
+            font-family: 'Playfair Display', serif;
+        }
+        .logo i {
+            font-size: 2rem;
+            color: #9e2a2b;
+            text-shadow: 0 0 6px rgba(158,42,43,0.5);
+        }
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: #e2dcd0;
+            font-weight: 500;
+            transition: 0.3s;
+            font-size: 1rem;
+        }
+        .nav-links a:hover {
+            color: #d9a13b;
+            text-shadow: 0 0 3px #d9a13b;
+        }
+        .btn-donate {
+            background: #9e2a2b;
+            padding: 8px 22px;
+            border-radius: 40px;
+            color: white !important;
+            font-weight: 700;
+            transition: 0.2s;
+            box-shadow: 0 0 6px rgba(158,42,43,0.6);
+        }
+        .btn-donate:hover {
+            background: #bb3e3f;
+            transform: scale(1.02);
+            box-shadow: 0 0 12px #9e2a2b;
+        }
+        .mobile-menu {
+            display: none;
+            font-size: 1.8rem;
+            color: #c73d3f;
+            cursor: pointer;
+        }
+
+        /* Hero - кровавый закат / разбитое стекло */
+        .hero {
+            background: radial-gradient(circle at 10% 20%, #1c1713, #080a09);
+            position: relative;
+            padding: 100px 0 120px;
+            overflow: hidden;
+        }
+        .hero::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" opacity="0.08"><path fill="none" stroke="%239e2a2b" stroke-width="1.5" d="M0,200 L300,100 L500,250 L800,80 L1100,200 L1200,150 M100,500 L350,400 L600,550 L900,380 L1150,520 M250,700 L450,620 L700,750 L1000,670"/><circle cx="200" cy="300" r="4" fill="%239e2a2b"/><circle cx="850" cy="150" r="6" fill="%239e2a2b"/><circle cx="1050" cy="450" r="5" fill="%239e2a2b"/></svg>');
+            background-repeat: repeat;
+            pointer-events: none;
+        }
+        .hero-grid {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 40px;
+            position: relative;
+            z-index: 2;
+        }
+        .hero-text h1 {
+            font-size: 3.8rem;
+            font-weight: 900;
+            line-height: 1.2;
+            font-family: 'Playfair Display', serif;
+            background: linear-gradient(135deg, #f3d9b1, #c73d3f);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 20px;
+        }
+        .hero-text p {
+            font-size: 1.2rem;
+            margin-bottom: 32px;
+            color: #cfcbbc;
+        }
+        .stat-number {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: #c73d3f;
+            text-shadow: 0 0 5px rgba(199,61,63,0.4);
+        }
+        .btn-primary {
+            background: #9e2a2b;
+            color: white;
+            padding: 14px 34px;
+            border-radius: 60px;
+            font-weight: 800;
+            text-decoration: none;
+            transition: 0.2s;
+            box-shadow: 0 5px 15px rgba(158,42,43,0.5);
+        }
+        .btn-outline-blood {
+            border: 2px solid #9e2a2b;
+            padding: 12px 30px;
+            border-radius: 60px;
+            color: #e2dcd0;
+            font-weight: 600;
+            text-decoration: none;
+            transition: 0.2s;
+        }
+        .btn-outline-blood:hover {
+            background: #9e2a2b20;
+            border-color: #c73d3f;
+        }
+
+        /* секции */
+        .section {
+            padding: 90px 0;
+            border-bottom: 1px solid rgba(158,42,43,0.2);
+        }
+        .section-title {
+            font-size: 2.8rem;
+            font-weight: 800;
+            font-family: 'Playfair Display', serif;
+            text-align: center;
+            margin-bottom: 16px;
+            letter-spacing: -0.5px;
+            color: #f0ddb0;
+        }
+        .section-sub {
+            text-align: center;
+            color: #b9aea0;
+            max-width: 700px;
+            margin: 0 auto 48px;
+            font-size: 1.1rem;
+        }
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+            gap: 32px;
+        }
+        .card {
+            background: #141715;
+            border-radius: 28px;
+            padding: 32px 24px;
+            transition: 0.25s;
+            border: 1px solid #2c2620;
+            box-shadow: 0 12px 20px rgba(0,0,0,0.4);
+            text-align: center;
+        }
+        .card:hover {
+            border-color: #9e2a2b;
+            transform: translateY(-8px);
+            box-shadow: 0 20px 32px -12px rgba(158,42,43,0.3);
+        }
+        .card-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: #c73d3f;
+        }
+
+        /* секция птиц с драматичной рамкой */
+        .birds-section {
+            background: #0c100e;
+            position: relative;
+        }
+        .bird-gallery {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 28px;
+            justify-content: center;
+        }
+        .bird-card {
+            background: #101412;
+            border-radius: 32px;
+            width: 270px;
+            overflow: hidden;
+            border: 1px solid #2e2822;
+            transition: 0.2s;
+        }
+        .bird-card:hover {
+            border-color: #9e2a2b;
+            box-shadow: 0 10px 25px rgba(158,42,43,0.3);
+        }
+        .status.critical {
+            background: #9e2a2b;
+            color: #fff3e0;
+        }
+        .blood-badge {
+            background: #7a1f20;
+            display: inline-block;
+            padding: 4px 14px;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: 0.75rem;
+        }
+        /* статистика ужаса */
+        .horror-stats {
+            display: flex;
+            justify-content: center;
+            gap: 48px;
+            flex-wrap: wrap;
+            margin-top: 40px;
+            background: #0a0d0c;
+            padding: 32px;
+            border-radius: 64px;
+            border: 1px dashed #9e2a2b;
+        }
+        .stat-block {
+            text-align: center;
+        }
+        .stat-number-large {
+            font-size: 2.8rem;
+            font-weight: 800;
+            color: #c73d3f;
+        }
+
+        /* как помочь - стиль */
+        .help-steps {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 32px;
+        }
+        .step {
+            background: #111513;
+            border-radius: 32px;
+            padding: 28px;
+            width: 260px;
+            text-align: center;
+            border-bottom: 3px solid #9e2a2b;
+        }
+
+        .donate-box {
+            background: linear-gradient(145deg, #131918, #0b0e0c);
+            border-radius: 48px;
+            padding: 48px;
+            border: 1px solid #9e2a2b50;
+            box-shadow: 0 0 28px rgba(158,42,43,0.2);
+            text-align: center;
+        }
+        .donate-btn {
+            background: #1f2622;
+            border: none;
+            padding: 12px 28px;
+            font-weight: 700;
+            border-radius: 60px;
+            color: #eeddbb;
+            transition: 0.2s;
+            cursor: pointer;
+        }
+        .donate-btn.active {
+            background: #9e2a2b;
+            color: white;
+            box-shadow: 0 0 12px #c73d3f;
+        }
+        .btn-submit {
+            background: #9e2a2b;
+            padding: 12px 28px;
+            border-radius: 60px;
+            border: none;
+            font-weight: bold;
+            color: white;
+        }
+        footer {
+            background: #050706;
+            border-top: 1px solid #9e2a2b;
+            padding: 48px 0 24px;
+        }
+        @media (max-width: 900px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+            }
+            .nav-links.show {
+                display: flex;
+            }
+            .mobile-menu {
+                display: block;
+            }
+            .hero-text h1 {
+                font-size: 2.4rem;
+            }
+        }
+        .blood-splatter {
+            font-size: 1rem;
+            letter-spacing: 2px;
+        }
+        a, button {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="navbar">
+                <div class="logo"><i class="fas fa-skull-crossbones"></i> LAST FLIGHT</div>
+                <div class="mobile-menu" id="mobileMenuBtn"><i class="fas fa-bars"></i></div>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="#home">КРОВАВЫЙ СЛЕД</a></li>
+                    <li><a href="#problems">УГРОЗЫ</a></li>
+                    <li><a href="#birds">ВИДЫ НА ГРАНИ</a></li>
+                    <li><a href="#help">СПАСЕНИЕ</a></li>
+                    <li><a href="#news">НОВОСТИ С ФРОНТА</a></li>
+                    <li><a href="#donate" class="btn-donate">ВЫКУПИТЬ ЖИЗНЬ</a></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section id="home" class="hero">
+            <div class="container hero-grid">
+                <div class="hero-text" data-aos="fade-right">
+                    <h1>Их молчание <br>окрашено кровью</h1>
+                    <p>Каждые 20 минут один вид птиц приближается к вымиранию. Стекла, яды, бетон. Мы — последняя линия обороны.</p>
+                    <div class="btn-group">
+                        <a href="#donate" class="btn-primary"><i class="fas fa-hand-holding-heart"></i> ОСТАНОВИТЬ БОЙНЮ</a>
+                        <a href="#problems" class="btn-outline-blood">УЗНАТЬ ПРАВДУ</a>
+                    </div>
+                    <div class="hero-stats" style="display: flex; gap: 32px; margin-top: 40px;">
+                        <div><span class="stat-number">-2.9 млрд</span><br>птиц с 1970</div>
+                        <div><span class="stat-number">1 из 8</span><br>видов вымер</div>
+                    </div>
+                </div>
+                <div data-aos="fade-left" style="background: rgba(158,42,43,0.1); border-radius: 60px; padding: 30px; backdrop-filter: blur(4px);">
+                    <i class="fas fa-dove" style="font-size: 130px; color: #9e2a2b; opacity: 0.8;"></i>
+                    <div class="blood-splatter">💔🩸🕊️</div>
+                </div>
+            </div>
+        </section>
+
+        <section id="problems" class="section">
+            <div class="container">
+                <div class="section-title">⚔️ АНАТОМИЯ КАТАСТРОФЫ ⚔️</div>
+                <div class="section-sub">Человек уничтожает пернатых быстрее, чем любое природное бедствие</div>
+                <div class="cards-grid">
+                    <div class="card"><div class="card-icon"><i class="fas fa-building"></i></div><h3>ЗЕРКАЛЬНЫЕ УБИЙЦЫ</h3><p>Стеклянные небоскрёбы убивают 1 млрд птиц в год только в США. Столкновения — мгновенная смерть.</p><div style="margin-top: 12px;"><span class="blood-badge">+700 млн жертв</span></div></div>
+                    <div class="card"><div class="card-icon"><i class="fas fa-cat"></i></div><h3>ДОМАШНИЕ ХИЩНИКИ</h3><p>Кошки на свободе — инвазивный вид: 2,4 млрд птиц ежегодно. Каждый ошейник — потенциальное орудие убийства.</p></div>
+                    <div class="card"><div class="card-icon"><i class="fas fa-disease"></i></div><h3>ПЕСТИЦИДЫ</h3><p>Неоникотиноиды разрушают нервную систему, вызывают коллапс популяций насекомоядных птиц.</p></div>
+                    <div class="card"><div class="card-icon"><i class="fas fa-fire"></i></div><h3>КЛИМАТИЧЕСКИЙ ГЕНОЦИД</h3><p>Сдвиг сезонов приводит к голодной смерти птенцов, ведь пик насекомых больше не совпадает с выводком.</p></div>
+                </div>
+                <div class="horror-stats">
+                    <div class="stat-block"><div class="stat-number-large">74%</div><div>популяций степных орлов исчезли</div></div>
+                    <div class="stat-block"><div class="stat-number-large">60%</div><div>видов водоплавающих под угрозой</div></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="birds" class="birds-section section">
+            <div class="container">
+                <div class="section-title">🩸 КРАСНАЯ КНИГА: ПОСЛЕДНИЕ СВИДЕТЕЛИ</div>
+                <div class="section-sub">Их голоса скоро замолкнут навсегда, если мы не вмешаемся прямо сейчас</div>
+                <div class="bird-gallery">
+                    <div class="bird-card"><div class="bird-img" style="height: 200px; background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Steppe_Eagle_%28Aquila_nipalensis%29_Photograph_By_Shantanu_Kuveskar_%28cropped%29.jpg/800px-Steppe_Eagle_%28Aquila_nipalensis%29_Photograph_By_Shantanu_Kuveskar_%28cropped%29.jpg') center/cover;"></div><div style="padding: 20px;"><h4>Степной орёл</h4><span class="status critical">🔴 КРИТИЧЕСКИ</span><p>Отравление тушами животных — массовая гибель. За 15 лет -53% особей.</p></div></div>
+                    <div class="bird-card"><div class="bird-img" style="height: 200px; background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/f/fb/Blakistons_fish_owl_%28Bubo_blakistoni%29.jpg/800px-Blakistons_fish_owl_%28Bubo_blakistoni%29.jpg') center/cover;"></div><div style="padding: 20px;"><h4>Рыбный филин</h4><span class="status critical">⚰️ НА ГРАНИ</span><p>Осталось менее 150 пар. Вырубка лесов лишает их дуплистых деревьев.</p></div></div>
+                    <div class="bird-card"><div class="bird-img" style="height: 200px; background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Aquila_chrysaetos_%28cropped%29.jpg/800px-Aquila_chrysaetos_%28cropped%29.jpg') center/cover;"></div><div style="padding: 20px;"><h4>Беркут</h4><span class="status critical">🩸 КРОВАВЫЙ СЛЕД</span><p>Браконьеры и ЛЭП убивают тысячи. Каждый четвёртый беркут гибнет от проводов.</p></div></div>
+                </div>
+                <p style="text-align: center; margin-top: 40px; color: #c73d3f;"><i class="fas fa-feather-alt"></i> Они не могут кричать — говорим за них мы</p>
+            </div>
+        </section>
+
+        <section id="help" class="section">
+            <div class="container">
+                <div class="section-title">⚔️ КАК СТАТЬ АНГЕЛОМ-ХРАНИТЕЛЕМ</div>
+                <div class="help-steps">
+                    <div class="step"><i class="fas fa-window-maximize" style="font-size: 2rem; color:#9e2a2b;"></i><h3>1. Антиударные окна</h3><p>Наклейки, сетки, жалюзи — спаси жизнь от столкновения со стеклом.</p></div>
+                    <div class="step"><i class="fas fa-paw" style="font-size: 2rem; color:#9e2a2b;"></i><h3>2. Контроль кошек</h3><p>Выгул только на шлейке, колокольчик — снижает убийства на 60%.</p></div>
+                    <div class="step"><i class="fas fa-tree" style="font-size: 2rem; color:#9e2a2b;"></i><h3>3. Отказ от пестицидов</h3><p>Органическое садоводство спасает насекомых, а значит и птиц.</p></div>
+                    <div class="step"><i class="fas fa-chart-line" style="font-size: 2rem; color:#9e2a2b;"></i><h3>4. Мониторинг</h3><p>Участвуй в Citizen Science — отправляй данные о редких видах.</p></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="news" class="section birds-section">
+            <div class="container">
+                <div class="section-title">📰 КРОВАВЫЕ СВОДКИ</div>
+                <div class="cards-grid">
+                    <div class="card"><i class="fas fa-newspaper" style="font-size: 2rem; color:#c73d3f;"></i><h3>ЧП в Сочи: мазут убил 5000 птиц</h3><p>Очередная катастрофа — очистка перьев не спасла тысячи уток и пеликанов. Волонтёры в отчаянии.</p><span class="blood-badge">03.2025</span></div>
+                    <div class="card"><i class="fas fa-industry" style="font-size: 2rem; color:#c73d3f;"></i><h3>В Астрахани сгорели колонии цапель</h3><p>Пожары в дельте Волги из-за человеческой халатности — уничтожено 200 гнёзд с птенцами.</p><span class="blood-badge">02.2025</span></div>
+                    <div class="card"><i class="fas fa-gavel" style="font-size: 2rem; color:#c73d3f;"></i><h3>Суд над браконьерами: соколы на чёрном рынке</h3><p>Задержана сеть, продававшая краснокнижных кречетов по $30 000. Каждая птица — последняя в роду.</p></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="donate" class="section">
+            <div class="container">
+                <div class="donate-box" data-aos="zoom-in">
+                    <i class="fas fa-hand-holding-heart" style="font-size: 54px; color: #c73d3f;"></i>
+                    <h2 style="font-size: 2.2rem; margin: 16px 0;">Выкупи крылья из плена смерти</h2>
+                    <p>1000 рублей = реабилитация и выпуск 5 раненых пернатых. <br> 5000 рублей = установка антиударных плёнок на одно здание.</p>
+                    <div class="donate-options" id="donateOptions" style="display: flex; gap: 16px; justify-content: center; margin: 32px 0; flex-wrap: wrap;">
+                        <button class="donate-btn" data-amount="700">700 ₽</button>
+                        <button class="donate-btn active" data-amount="1500">1500 ₽</button>
+                        <button class="donate-btn" data-amount="4000">4000 ₽</button>
+                        <button class="donate-btn" data-amount="10000">10 000 ₽</button>
+                    </div>
+                    <div class="custom-donate" style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+                        <input type="number" id="customAmount" placeholder="Любая сумма (₽)" style="background:#1e2421; border:1px solid #9e2a2b; padding: 12px; border-radius: 60px; color:white;">
+                        <button id="donateNowBtn" class="btn-submit"><i class="fas fa-donate"></i> СПАСТИ ПРЯМО СЕЙЧАС</button>
+                    </div>
+                    <p style="margin-top: 28px;"><i class="fas fa-shield-alt"></i> Фонд «Последний полёт» — каждая копейка идёт на антибраконьерство и лечение</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid" style="display: flex; flex-wrap: wrap; justify-content: space-between;">
+                <div><div class="logo" style="color:#c73d3f;">⚔️ BLOODWINGS</div><p>Мы воюем за тех, кто не может держать оружие. 10 лет спасения.</p></div>
+                <div><h4>Экстренная линия</h4><p><i class="fas fa-phone-alt"></i> +7 (800) 555‑35‑75</p><p><i class="fab fa-telegram"></i> @save_bird_emergency</p></div>
+                <div><i class="fab fa-vk"></i> <i class="fab fa-instagram"></i> <i class="fab fa-youtube"></i><br>#ОстановитьБойню</div>
+            </div>
+            <div class="copyright" style="text-align: center; margin-top: 40px;">© 2025 «Крылья в крови». Бездействие = соучастие в убийстве видов.</div>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 800, once: true });
+        // мобильное меню
+        const menuBtn = document.getElementById('mobileMenuBtn');
+        const navLinksEl = document.getElementById('navLinks');
+        if(menuBtn) menuBtn.onclick = () => navLinksEl.classList.toggle('show');
+
+        // донат
+        const donateBtns = document.querySelectorAll('.donate-btn');
+        const customInput = document.getElementById('customAmount');
+        const donateNowBtn = document.getElementById('donateNowBtn');
+        let currentAmount = 1500;
+        function setActive(amount) {
+            donateBtns.forEach(btn => {
+                if(parseInt(btn.dataset.amount) === amount) btn.classList.add('active');
+                else btn.classList.remove('active');
+            });
+        }
+        donateBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                currentAmount = parseInt(btn.dataset.amount);
+                setActive(currentAmount);
+                if(customInput) customInput.value = '';
+            });
+        });
+        if(customInput) {
+            customInput.addEventListener('input', (e) => {
+                let val = parseInt(e.target.value);
+                if(!isNaN(val) && val > 0) {
+                    currentAmount = val;
+                    donateBtns.forEach(btn => btn.classList.remove('active'));
+                }
+            });
+        }
+        if(donateNowBtn) {
+            donateNowBtn.addEventListener('click', () => {
+                let finalAmount = currentAmount;
+                if(customInput && customInput.value && !isNaN(parseInt(customInput.value))) finalAmount = parseInt(customInput.value);
+                if(finalAmount && finalAmount >= 50) {
+                    alert(`🩸 ВАШЕ ПОЖЕРТВОВАНИЕ ${finalAmount} ₽ ПРИНЯТО. \nСпасибо, вы продлили жизнь десяткам птиц. Кровь на наших руках смывается добром.`);
+                } else alert('Минимальная сумма — 50 ₽. Каждая монета спасает жизнь.');
+            });
+        }
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                if(href === "#") return;
+                const target = document.querySelector(href);
+                if(target) {
+                    e.preventDefault();
+                    target.scrollIntoView({ behavior: 'smooth' });
+                    if(navLinksEl.classList.contains('show')) navLinksEl.classList.remove('show');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

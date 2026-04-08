@@ -1,0 +1,61 @@
+
+body {
+    font-family: sans-serif;
+    margin: 0;
+    background-color: #f0f2f5; 
+    color: #333;
+    text-align: center; 
+}
+
+
+.navbar {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+    padding: 15px 30px;
+    background-color: white;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1); 
+}
+
+.navbar a {
+    text-decoration: none;
+    color: #555;
+    margin-left: 15px;
+}
+
+
+.container {
+    background-color: white;
+    margin: 50px auto; 
+    padding: 40px;
+    width: 80%;
+    max-width: 500px;
+    border-radius: 12px; 
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1); 
+}
+
+h1 {
+    color: #2c3e50;
+    margin-bottom: 10px;
+}
+
+p {
+    color: #7f8c8d;
+    margin-bottom: 25px;
+}
+
+/* Кнопка */
+.main-button {
+    background-color: #3498db; 
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    font-size: 16px;
+    border-radius: 20px; 
+    cursor: pointer;
+    transition: 0.3s; 
+}
+
+.main-button:hover {
+    background-color: #2980b9; 
+}

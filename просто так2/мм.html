@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE SILENT SKY | Гниющий Архив</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Creepster&family=Special+Elite&display=swap');
+        
+        :root { --blood-red: #880808; --rust: #b7410e; --dark-bg: #050000; }
+        body { font-family: 'Special Elite', cursive; background: var(--dark-bg); color: #d1d5db; overflow-x: hidden; scroll-behavior: smooth; }
+        .horror-title { font-family: 'Creepster', cursive; text-shadow: 0 0 15px var(--blood-red), 0 0 5px #000; }
+        
+        /* Эффект брызг крови */
+        .blood-splatter { position: absolute; pointer-events: none; opacity: 0.6; }
+        
+        /* Пульсация неона */
+        .neon-blood { color: var(--blood-red); text-shadow: 0 0 10px var(--blood-red), 0 0 20px var(--blood-red); animation: pulse 1.5s infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.7; } }
+        
+        /* Текстура ржавой сгоревшей бумаги */
+        .burned-page { background: #111; border: 2px solid var(--rust); box-shadow: inset 0 0 50px #000, 0 0 20px rgba(183, 65, 14, 0.3); position: relative; }
+        .burned-page::after { content: ""; position: absolute; inset: 0; background: url('https://www.transparenttextures.com/patterns/burned-paper.png'); opacity: 0.3; }
+
+        /* Капли крови, стекающие по экрану */
+        .dripping-blood { position: fixed; top: 0; left: 10%; width: 2px; height: 100px; background: var(--blood-red); box-shadow: 0 0 10px var(--blood-red); animation: drip 5s infinite; }
+        @keyframes drip { 0% { height: 0; opacity: 1; } 80% { height: 200px; opacity: 1; } 100% { height: 200px; opacity: 0; } }
+    </style>
+</head>
+<body class="p-4 md:p-10 relative">
+
+    <div class="dripping-blood" style="left: 15%;"></div>
+    <div class="dripping-blood" style="left: 60%; animation-delay: 2s;"></div>
+    <div class="dripping-blood" style="left: 85%; animation-delay: 3.5s;"></div>
+
+    <header class="h-screen flex flex-col justify-center items-center text-center px-4 relative burned-page mb-20">
+        <img src="https://www.transparentpng.com/download/blood/red-paint-splatter-transparent-background-13.png" class="blood-splatter w-96 opacity-40 top-20 right-20">
+        
+        <div class="relative z-10">
+            <h1 class="horror-title text-8xl md:text-[12rem] text-red-600 mb-8 tracking-wider">ОНИ УМЕРЛИ.</h1>
+            <p class="text-3xl font-light opacity-80 max-w-2xl mx-auto italic">Листайте вниз, если осмелитесь увидеть цену нашего молчания. <br><span class="neon-blood">Тишина убивает.</span></p>
+            <div class="mt-20 animate-bounce text-6xl text-red-800"><i class="fa-solid fa-skull"></i></div>
+        </div>
+    </header>
+
+    <section class="max-w-6xl mx-auto py-20 burned-page mb-20">
+        <div class="p-10 md:p-20">
+            <h2 class="horror-title text-6xl text-red-800 mb-20 flex items-center gap-6"><i class="fa-solid fa-book-dead"></i> 01. Хроники распада</h2>
+            <div class="space-y-12 text-2xl font-light text-slate-300 leading-relaxed text-justify">
+                <p>Когда последний Орел Стеллера упал замертво в 2028 году, мы думали, что это конец. О, как мы ошибались. Это было только начало. Птицы не просто пели. Они сдерживали ад. Без них леса превратились в гниющие болота, кишащие насекомыми, которые сожрали урожай за недели.</p>
+                <div class="bg-red-950 p-8 border-l-8 border-red-600 my-10 relative overflow-hidden">
+                    <img src="https://www.transparentpng.com/download/blood/red-paint-splatter-transparent-background-13.png" class="blood-splatter w-60 opacity-30 top-0 left-0">
+                    <p class="italic font-bold text-red-200">"Голод. Болезни. Войны за еду. Вот цена, которую мы заплатили за то, что позволили им исчезнуть. И теперь мы следующие."</p>
+                </div>
+                <p>Насекомые-вредители, не имея естественных врагов, размножились в геометрической прогрессии. Они переносили вирусы, которые мы не могли вылечить. Мир погрузился в хаос, и <span class="text-red-600">кровь</span> потекла по улицам городов, ставших кладбищами.</p>
+                <p>Охрана птиц была не о красоте. Она была о <span class="neon-blood">ВЫЖИВАНИИ</span>. И мы проиграли эту битву.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="max-w-7xl mx-auto burned-page py-20 mb-20 px-6">
+        <h2 class="horror-title text-6xl text-red-800 mb-20 tracking-wider">Кровавый след исчезновения</h2>
+        <p class="mb-10 text-slate-500 italic">Ниже — список тех, кого мы предали. Скоро здесь будет и ваше имя.</p>
+        
+        <div class="bg-black border border-red-900 rounded-lg overflow-hidden relative">
+            <img src="https://www.transparentpng.com/download/blood/red-paint-splatter-transparent-background-13.png" class="blood-splatter w-[600px] opacity-30 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+            
+            <table class="w-full text-left border-collapse text-xl">
+                <thead class="bg-red-950 text-red-200 uppercase text-xs font-bold tracking-[0.2em] border-b-2 border-red-600">
+                    <tr>
+                        <th class="p-8">Reference_ID</th>
+                        <th> Binomial_Name (Гниющий Вид) </th>
+                        <th> Последний_Ареал </th>
+                        <th> Причина_Смерти </th>
+                        <th class="p-8 text-right"> Данные_Морга </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="data-row border-b border-white/5 hover:bg-red-950 transition">
+                        <td class="p-8 opacity-40">#AV-DODO-X</td>
+                        <td class="horror-title text-3xl text-red-400">Raphus cucullatus (Додо)</td>
+                        <td>Остров Маврикий</td>
+                        <td class="text-red-600">Человеческая жадность</td>
+                        <td class="p-8 text-right opacity-30">1662 // VERIFIED</td>
+                    }
+                    <tr class="data-row border-b border-white/5 hover:bg-red-950 transition">
+                        <td class="p-8 opacity-40">#AV-PIGE-1</td>
+                        <td class="horror-title text-3xl text-red-400">Ectopistes migratorius (Странствующий голубь)</td>
+                        <td>Северная Америка</td>
+                        <td class="text-red-600">Массовый отстрел</td>
+                        <td class="p-8 text-right opacity-30">1914 // VERIFIED</td>
+                    }
+                    </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section class="h-[120vh] flex flex-col justify-center items-center text-center burned-page mb-20 p-6 relative overflow-hidden">
+        <img src="https://www.transparentpng.com/download/blood/red-paint-splatter-transparent-background-13.png" class="blood-splatter w-[800px] opacity-40 top-0 left-0">
+        <h2 class="horror-title text-8xl text-red-800 leading-none mb-20 tracking-wider">ЧТО<br>ВЫ<br>МОЖЕТЕ?</h2>
+        <p class="text-4xl max-w-3xl mx-auto mb-20 italic opacity-80">Ты пролистал этот ад. Теперь ты знаешь цену. Охрана птиц — это не хобби. Это последний шанс <span class="neon-blood">сохранить человечество</span> от самоликвидации.</p>
+        
+        <div class="flex flex-col md:flex-row gap-10 justify-center">
+            <button class="horror-title text-5xl bg-red-800 text-white py-10 px-20 rounded-full hover:scale-110 transition shadow-[0_0_30px_#880808]"> СДЕЛАТЬ ВКЛАД </button>
+            <button class="horror-title text-5xl border-8 border-red-800 text-red-800 py-10 px-20 rounded-full hover:bg-red-800 hover:text-white transition shadow-[0_0_30px_#880808]"> СТАТЬ ВОЛОНТЕРОМ </button>
+        </div>
+    </section>
+
+    <footer class="py-40 bg-black/80 text-center border-t border-red-900">
+        <div class="text-xs opacity-30 tracking-[3em] uppercase mb-10 text-red-800">The Silence is Here</div>
+        <p class="text-sm italic opacity-60 max-w-md mx-auto leading-relaxed">&copy; 2026 Проект "Последний крик". Все права защищены гниющим миром. Мы предупреждали.</p>
+    </footer>
+
+</body>
+</html>

@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Realistic Divine Doves Calculator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Glass+Antiqua&family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+        }
+
+        /* ОБОИ: ЯРКОЕ БОЖЕСТВЕННОЕ НЕБО С ЛУЧАМИ */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            /* Градиент ослепительного солнца из центра */
+            background: 
+                conic-gradient(from 180deg at 50% 50%, #ffffff 0deg, rgba(255, 223, 0, 0.4) 30deg, transparent 70deg, rgba(135, 206, 235, 0.2) 180deg, transparent 280deg, rgba(255, 255, 255, 0.5) 360deg),
+                linear-gradient(to bottom, #87CEEB, #ffffff);
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* КАНВАС ДЛЯ ЧАСТИЦ (пыльца, перья) */
+        canvas {
+            position: absolute;
+            top: 0; left: 0;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        /* КОРПУС - "МРАМОРНЫЙ КРИСТАЛЛ" */
+        .calculator {
+            position: relative;
+            z-index: 10;
+            width: 380px;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.5); /* Прозрачный мрамор */
+            backdrop-filter: blur(20px);
+            border: 2px solid rgba(255, 215, 0, 0.5); /* Золото */
+            border-radius: 60px 20px 60px 20px; /* Асимметричная форма */
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1), 0 0 30px rgba(255, 215, 0, 0.3);
+        }
+
+        /* ДИСПЛЕЙ - "ЗОЛОТАЯ ВЯЗЬ" */
+        #display {
+            width: 100%;
+            height: 90px;
+            background: transparent;
+            border: none;
+            border-bottom: 2px solid #ffd700;
+            color: #d4af37; /* Темное золото */
+            text-align: right;
+            padding: 10px;
+            font-size: 3.8rem;
+            font-family: 'Pinyon Script', cursive; /* Слипшаяся каллиграфия */
+            outline: none;
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.4);
+            margin-bottom: 30px;
+            letter-spacing: -2px;
+        }
+
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        /* КНОПКИ - "ЖЕМЧУГ" */
+        button {
+            height: 65px;
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid #eee;
+            border-radius: 15px;
+            color: #b8860b;
+            font-family: 'Glass Antiqua', cursive; /* Изящный антик */
+            font-size: 1.8rem;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #fff;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
+            color: #ffd700;
+        }
+
+        .operator { color: #4db6ac; font-family: 'Cinzel Decorative', serif; }
+        .clear { color: #f06292; font-family: 'Pinyon Script', cursive; font-size: 2rem; }
+        .equal { 
+            grid-column: span 2; 
+            background: linear-gradient(135deg, #ffd700, #fff); 
+            border-radius: 30px;
+            color: #fff;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 2rem;
+            border: none;
+        }
+
+        /* --- ЧЕТКАЯ АНИМАЦИЯ РЕАЛИСТИЧНЫХ ГОЛУБЕЙ (CSS Sprites) --- */
+        .dove {
+            position: absolute;
+            width: 120px;  /* Ширина одного кадра */
+            height: 100px; /* Высота одного кадра */
+            background-image: url('dove_sprite.png'); /* Ссылка на картинку-спрайт */
+            background-repeat: no-repeat;
+            z-index: 100; /* Самый верхний уровень */
+            pointer-events: none;
+            /* Добавляем божественное свечение */
+            filter: drop-shadow(0 0 10px #fff); 
+        }
+
+        /* Анимация движения по экрану */
+        @keyframes doveMove1 {
+            0%   { left: 10%; top: -10%; transform: scaleX(1); }
+            50%  { left: 90%; top: 50%; transform: scaleX(-1); } /* Разворот */
+            100% { left: 10%; top: 110%; transform: scaleX(1); }
+        }
+
+        @keyframes doveMove2 {
+            0%   { left: 90%; top: -10%; transform: scaleX(-1); }
+            50%  { left: 10%; top: 50%; transform: scaleX(1); } /* Разворот */
+            100% { left: 90%; top: 110%; transform: scaleX(-1); }
+        }
+
+        /* Анимация взмаха крыльев (переключение кадров спрайта) */
+        @keyframes doveFlap {
+            from { background-position: 0px 0px; }
+            to { background-position: -600px 0px; } /* Шаг: -120px * 5 кадров */
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="holyCanvas"></canvas>
+
+    <div class="dove" style="animation: doveMove1 20s linear infinite, doveFlap 0.6s steps(5) infinite;"></div>
+    <div class="dove" style="animation: doveMove2 18s linear infinite, doveFlap 0.6s steps(5) infinite; animation-delay: 5s;"></div>
+
+    <div class="calculator">
+        <input type="text" id="display" disabled placeholder="Eden">
+        <div class="buttons">
+            <button class="clear" onclick="clearDisplay()">Grace</button>
+            <button class="operator" onclick="appendToDisplay('/')">÷</button>
+            <button class="operator" onclick="appendToDisplay('*')">×</button>
+            <button class="operator" onclick="deleteLast()">⌫</button>
+            
+            <button onclick="appendToDisplay('7')">7</button>
+            <button onclick="appendToDisplay('8')">8</button>
+            <button onclick="appendToDisplay('9')">9</button>
+            <button class="operator" onclick="appendToDisplay('-')">-</button>
+            
+            <button onclick="appendToDisplay('4')">4</button>
+            <button onclick="appendToDisplay('5')">5</button>
+            <button onclick="appendToDisplay('6')">6</button>
+            <button class="operator" onclick="appendToDisplay('+')">+</button>
+            
+            <button onclick="appendToDisplay('1')">1</button>
+            <button onclick="appendToDisplay('2')">2</button>
+            <button onclick="appendToDisplay('3')">3</button>
+            <button onclick="appendToDisplay('.')">.</button>
+            
+            <button onclick="appendToDisplay('0')">0</button>
+            <button class="equal" onclick="calculate()">AMEN</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

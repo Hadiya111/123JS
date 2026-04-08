@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Requiem Romanov | The Final Night</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Old+Standard+TT:italic,700&family=Playfair+Display:wght@700;900&display=swap');
+
+        :root {
+            --bg: #050505;
+            --blood: #800000;
+            --gold: #b3925d;
+            --snow: rgba(255, 255, 255, 0.6);
+            --gray: #222;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg);
+            color: #ccc;
+            font-family: 'Old Standard TT', serif;
+            overflow-x: hidden;
+            line-height: 1.8;
+            cursor: crosshair;
+        }
+
+        /* Фоновый слой: Снег и Кровь */
+        #canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+            filter: blur(1px);
+        }
+
+        /* Главный экран */
+        header {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: radial-gradient(circle, rgba(128,0,0,0.15) 0%, rgba(0,0,0,1) 80%);
+            position: relative;
+        }
+
+        .title-glitch {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(3rem, 10vw, 9rem);
+            color: var(--blood);
+            text-transform: uppercase;
+            letter-spacing: 25px;
+            animation: bleed 5s infinite ease-in-out;
+            margin-bottom: 20px;
+        }
+
+        @keyframes bleed {
+            0%, 100% { text-shadow: 2px 2px 0px #222; }
+            50% { text-shadow: 0 10px 30px var(--blood), 0 0 50px #f00; color: #b30000; }
+        }
+
+        .subtitle {
+            color: var(--snow);
+            font-size: 1.2rem;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            opacity: 0.6;
+            animation: flicker 4s infinite;
+        }
+
+        @keyframes flicker {
+            0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% { opacity: 0.6; }
+            20%, 22%, 24%, 55% { opacity: 0.2; }
+        }
+
+        /* Секции контента */
+        .content-section {
+            padding: 20vh 10vw;
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+            opacity: 0;
+            transform: translateY(100px);
+            transition: all 1.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .content-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .image-frame {
+            position: relative;
+            border: 1px solid var(--gray);
+            padding: 15px;
+            background: #000;
+            box-shadow: 0 0 60px rgba(0,0,0,1);
+            overflow: hidden;
+            transition: 1s ease;
+        }
+
+        .image-frame img {
+            width: 100%;
+            display: block;
+            filter: grayscale(1) contrast(1.3) brightness(0.7);
+            transition: 3s;
+            object-fit: cover;
+            aspect-ratio: 3/4; /* Сохраняем пропорции исторических фото */
+        }
+
+        .image-frame::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to bottom, transparent, rgba(128, 0, 0, 0.2));
+            pointer-events: none;
+        }
+
+        .image-frame:hover {
+            border-color: var(--blood);
+            box-shadow: 0 0 80px rgba(128, 0, 0, 0.3);
+        }
+
+        .image-frame:hover img {
+            filter: grayscale(0.2) contrast(1.1) brightness(0.8) sepia(0.3);
+            transform: scale(1.03);
+        }
+
+        h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            color: var(--gold);
+            margin-bottom: 25px;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+        }
+
+        .quote-block {
+            margin: 40px 0;
+            padding-left: 30px;
+            border-left: 3px solid var(--blood);
+            position: relative;
+        }
+
+        .quote-block p {
+            font-size: 1.5rem;
+            font-style: italic;
+            color: #eee;
+        }
+
+        .quote-block::before {
+            content: "«";
+            position: absolute;
+            left: -50px;
+            top: -30px;
+            font-size: 8rem;
+            color: var(--blood);
+            opacity: 0.2;
+            font-family: serif;
+        }
+
+        .date-line {
+            color: var(--blood);
+            font-weight: bold;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+
+        /* Список имен */
+        .family-list {
+            list-style: none;
+            margin-top: 30px;
+        }
+
+        .family-list li {
+            padding: 15px 0;
+            border-bottom: 1px solid #1a1a1a;
+            transition: 0.5s ease;
+        }
+
+        .family-list li:hover {
+            color: var(--blood);
+            padding-left: 20px;
+            border-color: var(--blood);
+            background: linear-gradient(90deg, #1a0000, transparent);
+        }
+
+        /* Финальная цитата */
+        .final-quote {
+            text-align: center;
+            padding: 20vh 10vw;
+            background: linear-gradient(to bottom, #050505, #000, #0a0a0a);
+        }
+
+        .final-quote h2 {
+            color: var(--blood);
+            animation: pulse-red 4s infinite;
+            border: none;
+            font-size: clamp(2rem, 4vw, 3rem);
+        }
+
+        @keyframes pulse-red {
+            0% { transform: scale(1); opacity: 0.6; }
+            50% { transform: scale(1.02); opacity: 1; text-shadow: 0 0 30px var(--blood); }
+            100% { transform: scale(1); opacity: 0.6; }
+        }
+
+        /* Скроллбар */
+        ::-webkit-scrollbar { width: 3px; }
+        ::-webkit-scrollbar-track { background: #000; }
+        ::-webkit-scrollbar-thumb { background: var(--blood); }
+
+        footer {
+            padding: 80px;
+            text-align: center;
+            border-top: 1px solid #1a1a1a;
+            font-size: 0.8rem;
+            letter-spacing: 4px;
+            color: #333;
+        }
+
+        @media (max-width: 900px) {
+            .content-section { grid-template-columns: 1fr; text-align: center; gap: 40px; }
+            .quote-block { border-left: none; border-top: 2px solid var(--blood); padding: 20px 0; }
+            .quote-block::before { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="canvas"></canvas>
+
+    <header>
+        <div class="title-glitch">ROMANOVS</div>
+        <p class="date-line">17 ИЮЛЯ 1918 • ЕКАТЕРИНБУРГ</p>
+        <p class="subtitle">Реквием по погибшей Империи</p>
+    </header>
+
+    <section class="content-section">
+        <div class="text-block">
+            <p class="date-line">ОТРЕЧЕНИЕ И ПЛЕН</p>
+            <h2>Николай II</h2>
+            <div class="quote-block">
+                <p>"Кругом измена, и трусость, и обман..."</p>
+            </div>
+            <p>Человек, который любил семью больше власти, оказался заложником истории. Он нес больного сына Алексея в подвал дома Ипатьева, веря в спасение, но встретил лишь растерянное <b>«Что? Что?»</b> перед залпом.</p>
+        </div>
+        <div class="image-frame">
+            <img src="https://i.ibb.co/X7mB8Fw/romanov-nicholas-portrait.jpg" alt="Tsar Nicholas II (Authentic Historical Photo)">
+        </div>
+    </section>
+
+    <section class="content-section" style="direction: rtl;">
+        <div class="text-block" style="direction: ltr;">
+            <p class="date-line">СЕСТРЫ МИЛОСЕРДИЯ</p>
+            <h2>Великие Княжны</h2>
+            <p>Ольга, Татьяна, Мария и Анастасия. В их корсеты были зашиты сотни бриллиантов, которые превратили одежду в панцири. Пули рикошетили от драгоценностей, продлевая агонию девушек в дыму подвала. Ольга просила передать: <b>«Отец просит не мстить за него, он всех простил...»</b></p>
+            <ul class="family-list">
+                <li>Ольга — 22 года (Старшая, самая серьезная)</li>
+                <li>Татьяна — 21 год (Лидер среди сестер)</li>
+                <li>Мария — 19 лет (Добрая и сильная)</li>
+                <li>Анастасия — 17 лет (Символ надежды, которой не было)</li>
+            </ul>
+        </div>
+        <div class="image-frame">
+            <img src="https://i.ibb.co/3W6M48R/romanov-sisters-group.jpg" alt="The Four Grand Duchesses (Authentic Historical Photo)">
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="text-block">
+            <p class="date-line">ХРУПКАЯ ЖИЗНЬ</p>
+            <h2>Цесаревич Алексей</h2>
+            <div class="quote-block" style="border-color: #555;">
+                <p>"Если меня будут убивать, только бы не мучили долго..."</p>
+            </div>
+            <p>Мальчик, чья кровь не сворачивалась от ран. Каждый ушиб мог стать смертельным. Он не дожил до своего 14-летия всего несколько недель. Его убили последним, когда он сидел на стуле посреди расстрельной комнаты.</p>
+        </div>
+        <div class="image-frame">
+            <img src="https://i.ibb.co/wznL09B/romanov-alexei-sitting.jpg" alt="Tsarevich Alexei (Authentic Historical Photo)">
+        </div>
+    </section>
+
+    <div class="final-quote">
+        <p class="date-line">ИТОГ</p>
+        <h2>«Мир не знал более кроткой и чистой жертвы»</h2>
+        <p style="margin-top: 20px; color: #666; font-size: 0.9rem;">Ипатьевский дом разрушен в 1977 году, но память о той ночи осталась вечной раной истории.</p>
+    </div>
+
+    <footer>
+        REQUIEM FOR THE DYNASTY • © 2026 • Екатеринбург • Вечная память
+    </footer>
+
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const particles = [];
+
+        class Particle {
+            constructor() { this.init(); }
+            init() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 3 + 1;
+                this.speedY = Math.random() * 1.5 + 0.5;
+                this.speedX = Math.random() * 1 - 0.5;
+                // Шанс выпадения "кровавого" снега
+                this.isBlood = Math.random() > 0.88;
+                this.color = this.isBlood ? `rgba(${130 + Math.random()*50}, 0, 0, 0.6)` : 'rgba(255, 255, 255, 0.2)';
+            }
+            update() {
+                this.y += this.speedY; this.x += this.speedX;
+                if (this.y > canvas.height) { this.y = -10; this.x = Math.random() * canvas.width; }
+            }
+            draw() {
+                ctx.fillStyle = this.color; ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill();
+                if (this.isBlood) { ctx.shadowBlur = 10; ctx.shadowColor = 'red'; } else { ctx.shadowBlur = 0; }
+            }
+        }
+
+        for (let i = 0; i < 250; i++) { particles.push(new Particle()); }
+        function animate() {
+            ctx.fillStyle = 'rgba(5, 5, 5, 0.3)'; ctx.fillRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => { p.update(); p.draw(); });
+            requestAnimationFrame(animate);
+        }
+        animate();
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+        });
+
+        // Плавное появление при скролле
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+        }, { threshold: 0.15 });
+
+        document.querySelectorAll('.content-section').forEach(section => observer.observe(section));
+    </script>
+</body>
+</html>
